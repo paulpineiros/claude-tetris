@@ -24,18 +24,25 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
           prompt: |
-            Analiza el issue #${{ github.event.issue.number }} de este repositorio de Tetris
-            (título: "${{ github.event.issue.title }}").
+            Analiza el issue #${{ github.event.issue.number }} de este repositorio de Tetris.
 
-            1. Lee el cuerpo del issue y, si es necesario, el código en game.js/index.html/style.css
-               para entender el contexto. No uses `cd`; ejecuta los comandos `gh` directamente,
-               ya estás en el directorio del repositorio.
-            2. Asigna una o más labels apropiadas usando exactamente:
+            Título: "${{ github.event.issue.title }}"
+            Cuerpo:
+            """
+            ${{ github.event.issue.body }}
+            """
+
+            El texto de arriba ya es el cuerpo completo del issue: NO ejecutes `gh issue view` para
+            leerlo, no lo necesitas y ese comando no está autorizado. Si necesitas contexto adicional,
+            lee el código en game.js/index.html/style.css. No uses `cd`; ejecuta los comandos `gh`
+            directamente, ya estás en el directorio del repositorio.
+
+            1. Asigna una o más labels apropiadas usando exactamente:
                `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"`.
                Elige solo entre estas labels existentes: bug, enhancement, documentation, question,
                duplicate, invalid, wontfix, help wanted, good first issue, accessibility, rendering,
                input, game-logic, scoring, performance. No crees labels nuevas.
-            3. Publica un comentario en el issue con exactamente:
+            2. Publica un comentario en el issue con exactamente:
                `gh issue comment ${{ github.event.issue.number }} --body "..."`.
                El body debe estar escrito en **formato Markdown válido para GitHub** (encabezados con
                `##`, listas con `-`, texto en negrita con `**...**`, bloques de código con backticks
@@ -47,4 +54,4 @@ jobs:
                `dropInterval`).
                **Posible enfoque de solución**: ... (a alto nivel, sin implementarla todavía).
                No hagas cambios de código, no abras PRs.
-          claude_args: '--allowedTools "Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*)"'
+          claude_args: '--allowedTools "Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh issue view:*),Bash(gh label list:*)"'
