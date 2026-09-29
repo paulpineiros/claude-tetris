@@ -22,21 +22,29 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
           prompt: |
             Analiza el issue #${{ github.event.issue.number }} de este repositorio de Tetris
             (título: "${{ github.event.issue.title }}").
 
             1. Lee el cuerpo del issue y, si es necesario, el código en game.js/index.html/style.css
-               para entender el contexto.
-            2. Asigna una o más labels apropiadas usando `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"`.
+               para entender el contexto. No uses `cd`; ejecuta los comandos `gh` directamente,
+               ya estás en el directorio del repositorio.
+            2. Asigna una o más labels apropiadas usando exactamente:
+               `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"`.
                Elige solo entre estas labels existentes: bug, enhancement, documentation, question,
                duplicate, invalid, wontfix, help wanted, good first issue, accessibility, rendering,
                input, game-logic, scoring, performance. No crees labels nuevas.
-            3. Publica un comentario en el issue con `gh issue comment ${{ github.event.issue.number }} --body "..."`
-               que contenga un diagnóstico general en español:
-               - Resumen del problema.
-               - Causa probable / hipótesis, referenciando funciones o variables concretas de game.js
-                 cuando aplique (ej. collide, tryRotate, clearLines, loop, dropInterval).
-               - Un posible enfoque de solución a alto nivel (sin implementarla todavía).
+            3. Publica un comentario en el issue con exactamente:
+               `gh issue comment ${{ github.event.issue.number }} --body "..."`.
+               El body debe estar escrito en **formato Markdown válido para GitHub** (encabezados con
+               `##`, listas con `-`, texto en negrita con `**...**`, bloques de código con backticks
+               para nombres de funciones/variables) y en español, con esta estructura:
+               ## Diagnóstico
+               **Resumen del problema**: ...
+               **Causa probable**: ..., referenciando funciones o variables concretas de game.js
+               entre backticks cuando aplique (ej. `collide`, `tryRotate`, `clearLines`, `loop`,
+               `dropInterval`).
+               **Posible enfoque de solución**: ... (a alto nivel, sin implementarla todavía).
                No hagas cambios de código, no abras PRs.
-          claude_args: '--allowedTools "Bash(gh issue edit:*),Bash(gh issue comment:*)"'
+          claude_args: '--allowedTools "Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*)"'
