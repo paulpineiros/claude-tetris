@@ -1,3 +1,44 @@
+/* ---- Temas ---- */
+:root {
+  --bg: #0f0f17;
+  --text: #e0e0e0;
+  --accent: #7aa2f7;
+  --accent-hover: #9bbdff;
+  --accent-glow: rgba(122, 162, 247, 0.4);
+  --accent-contrast: #0f0f17;
+  --board-bg: #1a1a25;
+  --border: #2a2a3a;
+  --grid: #22222e;
+  --shadow: rgba(0, 0, 0, 0.6);
+  --label: #555570;
+  --muted: #888;
+  --kbd-bg: #22223a;
+  --kbd-border: #3a3a5a;
+  --kbd-text: #aaa;
+  --overlay-bg: rgba(10, 10, 20, 0.75);
+  --danger: #e57373;
+}
+
+[data-theme="light"] {
+  --bg: #f2f4f8;
+  --text: #1f2430;
+  --accent: #3d59a1;
+  --accent-hover: #2f4783;
+  --accent-glow: rgba(61, 89, 161, 0.25);
+  --accent-contrast: #ffffff;
+  --board-bg: #ffffff;
+  --border: #c5cad6;
+  --grid: #e3e6ee;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --label: #5a6072;
+  --muted: #4a5060;
+  --kbd-bg: #e8ebf3;
+  --kbd-border: #b8bfcf;
+  --kbd-text: #3a4050;
+  --overlay-bg: rgba(242, 244, 248, 0.8);
+  --danger: #c62828;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -5,8 +46,8 @@
 }
 
 body {
-  background: #0f0f17;
-  color: #e0e0e0;
+  background: var(--bg);
+  color: var(--text);
   font-family: system-ui, -apple-system, sans-serif;
   display: flex;
   align-items: center;
@@ -24,9 +65,9 @@ body {
   font-size: 32px;
   font-weight: 800;
   letter-spacing: 8px;
-  color: #7aa2f7;
+  color: var(--accent);
   margin-bottom: 16px;
-  text-shadow: 0 0 20px rgba(122, 162, 247, 0.4);
+  text-shadow: 0 0 20px var(--accent-glow);
 }
 
 .game-container {
@@ -37,10 +78,10 @@ body {
 
 #board {
   display: block;
-  border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  border: 1px solid var(--border);
+  background: var(--board-bg);
   border-radius: 4px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 40px var(--shadow);
 }
 
 /* ---- Panel lateral ---- */
@@ -61,7 +102,7 @@ body {
 .label {
   font-size: 10px;
   letter-spacing: 2px;
-  color: #555570;
+  color: var(--label);
   font-weight: 600;
 }
 
@@ -69,14 +110,14 @@ body {
   font-family: 'Courier New', Courier, monospace;
   font-size: 26px;
   font-weight: 700;
-  color: #7aa2f7;
+  color: var(--accent);
   letter-spacing: 1px;
 }
 
 #next-canvas {
   display: block;
-  border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  border: 1px solid var(--border);
+  background: var(--board-bg);
   border-radius: 4px;
 }
 
@@ -90,20 +131,20 @@ body {
 
 .controls li {
   font-size: 12px;
-  color: #888;
+  color: var(--muted);
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 kbd {
-  background: #22223a;
-  border: 1px solid #3a3a5a;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
   border-radius: 3px;
   padding: 1px 6px;
   font-size: 11px;
   font-family: inherit;
-  color: #aaa;
+  color: var(--kbd-text);
 }
 
 /* ---- Overlay ---- */
@@ -113,7 +154,7 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 10, 20, 0.75);
+  background: var(--overlay-bg);
   backdrop-filter: blur(4px);
   border-radius: 4px;
 }
@@ -134,19 +175,19 @@ kbd {
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 4px;
-  color: #e57373;
+  color: var(--danger);
 }
 
 #overlay-score {
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
-  color: #7aa2f7;
+  color: var(--accent);
 }
 
 #restart-btn {
   margin-top: 8px;
-  background: #7aa2f7;
-  color: #0f0f17;
+  background: var(--accent);
+  color: var(--accent-contrast);
   border: none;
   border-radius: 6px;
   padding: 10px 28px;
@@ -158,5 +199,57 @@ kbd {
 }
 
 #restart-btn:hover {
-  background: #9bbdff;
+  background: var(--accent-hover);
+}
+
+/* ---- Toggle de tema ---- */
+.theme-toggle {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--label);
+  cursor: pointer;
+}
+
+.theme-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  transition: background 0.15s;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.15s;
+}
+
+.theme-toggle input:checked + .switch::after {
+  transform: translateX(18px);
+}
+
+.theme-toggle input:focus-visible + .switch {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
