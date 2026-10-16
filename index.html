@@ -47,6 +47,23 @@
           </ul>
         </div>
       </aside>
+
+      <!-- Records -->
+      <section id="records" class="records" aria-label="Tabla de records">
+        <span class="label">RECORDS</span>
+        <ol id="records-list" class="records-list"></ol>
+        <form id="records-form" class="records-form hidden" autocomplete="off">
+          <span id="records-form-msg">¡Nuevo récord! Tu nombre:</span>
+          <input type="text" id="records-name" maxlength="12" placeholder="Nombre" aria-label="Nombre" />
+          <button type="submit" id="records-save-btn" class="records-btn">Guardar</button>
+        </form>
+        <ul class="records-stats">
+          <li>Mejor combo: <b id="records-best-combo">0</b></li>
+          <li>Máx. líneas: <b id="records-max-lines">0</b></li>
+        </ul>
+        <button type="button" id="records-reset-btn" class="records-btn records-btn-danger">Resetear records</button>
+      </section>
+      <!-- /Records -->
     </div>
 
     <div id="overlay" class="overlay hidden">
